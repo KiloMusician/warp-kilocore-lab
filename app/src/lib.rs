@@ -36,6 +36,7 @@ mod drive;
 mod dynamic_libraries;
 mod env_vars;
 mod experiments;
+mod kilocore;
 mod external_secrets;
 #[cfg(target_family = "wasm")]
 mod font_fallback;
@@ -1237,6 +1238,9 @@ fn initialize_app(
 
     #[cfg(feature = "local_tty")]
     terminal::available_shells::register(ctx);
+
+    // KiloCore colony gateway health poller (background thread, 30s interval)
+    kilocore::register(ctx);
 
     // Add truly global actions that don't depend on the existence of any view here
     ctx.add_global_action("app:toggle_user_ps1", move |_args: &(), ctx| {

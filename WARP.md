@@ -178,3 +178,60 @@ if FeatureFlag::YourNewFeature.is_enabled() {
 ### Exhaustive Matching
 
 When adding/editing match statements, avoid using the wildcard _ when at all possible. Exhaustive matching is helpful for ensuring that all variants are handled, especially when adding new variants to enums in the future.
+
+---
+
+## KiloCore Colony Integration
+
+This fork (`kilocore/integration-lab`) wires the KiloCore colony into the Warp UI.
+
+### Colony map
+
+| Repo | Role | Port |
+|------|------|------|
+| `Kilo_Core` | Docker, substrate, colony doctrine | — |
+| `NuSyQ-Hub` | MCP gateway, orchestration, ChatGPT connector | 8000 |
+| `Dev-Mentor` | Terminal Depths game, agent cockpit | 7337 |
+| `SimulatedVerse` | Game engine, consciousness substrate | 5100 |
+| `CONCEPT_SAMURAI` | Host governance, Windows stability | — |
+
+### New code in this fork
+
+- `crates/kilocore_gateway/` — stdlib-only gateway probe; no async required
+  - `GatewayClient::probe()` → `GatewayStatus` (reachable, tool_count, services)
+  - `GatewayStatus::label()` → one-line status bar string (e.g. `⬡ KC 2/2 svc  41 tools`)
+  - Run: `cargo run --package kilocore_gateway --example status_probe`
+- `app/src/kilocore/` — `GatewayPoller` singleton + `render_gateway_indicator()`
+  - Registered at startup via `kilocore::register(ctx)`
+  - Background thread polls every 30s; stores `GatewayStatus` behind `Arc<Mutex<>>`
+- `FeatureFlag::KilocoreGatewayWidget` — gates the globe health dot in every pane header
+- `.warp/` — colony Drive: 22+ workflows, 2 rules files, theme, launch configs, mcp_servers.json
+
+### Feature flag for dogfood builds
+
+To enable the gateway widget by default for local `dev` builds, add to `DOGFOOD_FLAGS`:
+```rust
+// in crates/warp_features/src/lib.rs
+pub const DOGFOOD_FLAGS: &[FeatureFlag] = &[
+    // ...existing flags...
+    FeatureFlag::KilocoreGatewayWidget,
+];
+```
+
+### Decision logging
+
+Before architectural changes to the integration layer, check:
+```bash
+grep -i "<topic>" C:/dev/active/Kilo_Core/.continuity/decisions.json
+```
+After changes, log immediately:
+```bash
+node C:/dev/active/Kilo_Core/continuity-cli/bin/continuity.js log "Q" "A"
+```
+
+### Branch doctrine
+
+- `kilocore/integration-lab` — all KiloCore source + config changes
+- `upstream-main` — pull-only mirror of `warpdotdev/warp`
+- Never push KiloCore commits to `upstream-main`
+- Sync before feature work: `git fetch upstream && git reset --hard upstream/master` on `upstream-main`, then rebase `kilocore/integration-lab`

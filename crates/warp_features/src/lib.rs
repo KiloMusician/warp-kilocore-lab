@@ -278,6 +278,10 @@ pub enum FeatureFlag {
     /// MCP server v0 functionality.
     McpServer,
 
+    /// Shows a KiloCore colony gateway health indicator in the terminal pane header.
+    /// The indicator displays the gateway reachability and registered tool count.
+    KilocoreGatewayWidget,
+
     /// Enables image as context for AM.
     ImageAsContext,
 

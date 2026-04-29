@@ -428,6 +428,16 @@ impl TerminalView {
         if let Some(content) = left_of_overflow {
             right_row.add_child(content);
         }
+        // KiloCore gateway health indicator — gated by feature flag
+        if FeatureFlag::KilocoreGatewayWidget.is_enabled() {
+            let indicator = crate::kilocore::render_gateway_indicator(
+                self.mouse_states.kilocore_gateway_indicator.clone(),
+                app,
+            );
+            right_row.add_child(indicator);
+            icon_button_count += 1;
+        }
+
         let sharing_element = header_ctx.sharing_controls(app, icon_color, button_size);
         let has_sharing_element = sharing_element.is_some();
         if let Some(sharing) = sharing_element {
