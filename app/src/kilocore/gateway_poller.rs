@@ -5,7 +5,7 @@ use std::{
 };
 
 use kilocore_gateway::{GatewayClient, GatewayStatus};
-use warpui::{AppContext, ModelContext, SingletonEntity};
+use warpui::{AppContext, Entity, ModelContext, SingletonEntity};
 
 const POLL_INTERVAL: Duration = Duration::from_secs(30);
 
@@ -16,6 +16,10 @@ const POLL_INTERVAL: Duration = Duration::from_secs(30);
 /// pane header reads from this singleton to render the gateway health indicator.
 pub struct GatewayPoller {
     status: Arc<Mutex<GatewayStatus>>,
+}
+
+impl Entity for GatewayPoller {
+    type Event = ();
 }
 
 impl SingletonEntity for GatewayPoller {}

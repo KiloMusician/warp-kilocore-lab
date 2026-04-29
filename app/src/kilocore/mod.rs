@@ -2,11 +2,13 @@ mod gateway_poller;
 
 pub use gateway_poller::{cached_status, GatewayPoller};
 
-use warpui::elements::{ConstrainedBox, MouseStateHandle, OffsetPositioning, ChildAnchor, ParentAnchor, ParentOffsetBounds, ParentElement, Stack};
+use pathfinder_color::ColorU;
+use warp_core::ui::icons::Icon as WarpIcon;
+use warp_core::ui::theme::Fill;
+use warpui::elements::{ChildAnchor, ConstrainedBox, MouseStateHandle, OffsetPositioning, ParentAnchor, ParentOffsetBounds, ParentElement, Stack};
+use warpui::prelude::vec2f;
 use warpui::prelude::Hoverable;
 use warpui::{AppContext, Element};
-use warpui::prelude::vec2f;
-use warp_core::ui::Icon as WarpIcon;
 
 use crate::appearance::Appearance;
 
@@ -26,7 +28,7 @@ pub fn render_gateway_indicator(
 
     let icon_color = if status.reachable {
         // Accent green — matches KiloCore Dark theme #30a46c
-        warp_core::ui::Color::from_rgb(48, 164, 108)
+        Fill::Solid(ColorU::new(48, 164, 108, 255))
     } else {
         theme.sub_text_color(theme.background())
     };
