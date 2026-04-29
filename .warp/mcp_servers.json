@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "kilocore-gateway": {
+      "type": "http",
+      "url": "http://localhost:8000/mcp",
+      "description": "KiloCore NuSyQ-Hub MCP gateway (41 tools, OAuth2 DCR)"
+    },
+    "terminal-depths": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "-u",
+        "C:/dev/active/Dev-Mentor/mcp/server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "C:/dev/active/Dev-Mentor",
+        "TERMINAL_DEPTHS_URL": "http://localhost:7337"
+      },
+      "description": "Dev-Mentor Terminal Depths MCP server"
+    },
+    "continuity": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "-u",
+        "C:/dev/active/Kilo_Core/scripts/launch_continuity_mcp.py"
+      ],
+      "description": "Continuity decision-logging MCP server"
+    }
+  }
+}

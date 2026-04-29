@@ -1,0 +1,12 @@
+---
+name: "Colony Doctor"
+description: "Full-stack health check: Docker, gateway, inference, colony services."
+tags: [colony, health, doctor]
+
+command: |
+  echo "=== Docker ===" && docker --context desktop-linux info --format "Server: {{.ServerVersion}}" 2>&1 | head -1
+  echo "=== Services ===" && docker --context desktop-linux compose -f C:/dev/active/Kilo_Core/docker-compose.yml ps --format "table {{.Name}}\t{{.Status}}" 2>&1
+  echo "=== Inference ==="
+  curl -sf http://localhost:11434/api/tags > /dev/null && echo "Ollama :11434  UP" || echo "Ollama :11434  DOWN"
+  curl -sf http://localhost:4000/health > /dev/null && echo "LiteLLM :4000  UP" || echo "LiteLLM :4000  DOWN"
+  echo "=== Gateway ===" && python C:/dev/active/Kilo_Core/scripts/gateway_check.py

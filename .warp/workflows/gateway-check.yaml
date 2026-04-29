@@ -1,0 +1,7 @@
+---
+name: "Gateway Health Check"
+description: "Run gateway_check.py — service health, tool count, and self-test."
+tags: [colony, gateway, health]
+
+command: |
+  python C:/dev/active/Kilo_Core/scripts/gateway_check.py

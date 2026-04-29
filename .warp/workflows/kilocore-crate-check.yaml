@@ -1,0 +1,10 @@
+---
+name: "KiloCore Crate Check"
+description: "Check and test the kilocore_gateway crate in the Warp fork."
+tags: [warp-fork, kilocore, rust]
+
+command: |
+  cd C:/dev/active/warp-kilocore-lab
+  cargo check --package kilocore_gateway 2>&1
+  echo "---"
+  cargo test --package kilocore_gateway 2>&1

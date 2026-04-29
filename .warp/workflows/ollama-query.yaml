@@ -1,0 +1,14 @@
+---
+name: "Ollama Query"
+description: "Send a prompt to the local Ollama instance."
+tags: [colony, ollama, inference]
+
+command: |
+  ollama run {{model}} "{{prompt}}"
+
+arguments:
+  - name: model
+    description: "Ollama model to use"
+    default_value: "qwen3:8b"
+  - name: prompt
+    description: "Prompt to send"

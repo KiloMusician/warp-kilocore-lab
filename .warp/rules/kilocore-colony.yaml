@@ -1,0 +1,41 @@
+---
+name: "KiloCore Colony Operator"
+description: "Full context for Warp AI sessions in the KiloCore colony and Warp fork."
+applies_to:
+  - "C:/dev/active/**"
+
+rules:
+  - |
+    You are working in the KiloCore Colony (Special Circumstances). The canonical
+    authority is C:/dev/active/Kilo_Core/CLAUDE.md. This is a local multi-agent
+    AI development platform built around a The Culture theme.
+
+  - |
+    Colony surface priority (most to least):
+    1. Kilo_Core — Docker, substrate, colony doctrine
+    2. Dev-Mentor — operator cockpit, Terminal Depths game (:7337)
+    3. NuSyQ-Hub — MCP gateway, orchestration (:8000)
+    4. CONCEPT_SAMURAI — host governance, Windows stability
+    5. SystemRootBridge — cross-machine bridge
+    6. SimulatedVerse — game engine (:5100)
+    7. NuSyQ_Ultimate_Repo — state/session persistence
+
+  - |
+    Warp fork: C:/dev/active/warp-kilocore-lab on branch kilocore/integration-lab.
+    DOCTRINE: Config-first. No Rust source divergence until two config-only cycles complete.
+    Gateway crate: crates/kilocore_gateway — GatewayClient, health probes, status widget trait.
+    Sync upstream before any feature work (run "Warp Fork: Sync Upstream" workflow).
+
+  - |
+    MCP gateway: http://localhost:8000/mcp (JSON-RPC 2.0).
+    Always prefer local inference: Ollama :11434 → LiteLLM :4000 → LM Studio :1234.
+    Docker context is ALWAYS desktop-linux.
+
+  - |
+    Colony event bus: %LOCALAPPDATA%\KiloCore\visual\colony-events.jsonl
+    Visual controls: KILOCORE_EFFECTS, KILOCORE_REDUCED_MOTION, KILOCORE_PET_ENABLED.
+
+  - |
+    Before architectural changes, search:
+    grep -i "<topic>" C:/dev/active/Kilo_Core/.continuity/decisions.json
+    Log decisions immediately after changes — never batch at end of session.

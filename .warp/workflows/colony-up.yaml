@@ -1,0 +1,12 @@
+---
+name: "Colony Up"
+description: "Bring up the full KiloCore Docker stack and wait for gateway health."
+tags: [colony, docker, startup]
+
+command: |
+  cd C:/dev/active/Kilo_Core
+  docker --context desktop-linux compose up -d
+  echo "Waiting for gateway..."
+  until curl -sf http://localhost:8000/apps/kilocore-mission-board/health; do sleep 1; done
+  echo "Gateway ready."
+  docker --context desktop-linux compose ps

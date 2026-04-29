@@ -1,0 +1,8 @@
+---
+name: "KiloCore Status Bar Test"
+description: "Exercise the gateway status probe used by the Warp status bar widget."
+tags: [warp-fork, kilocore, status-bar]
+
+command: |
+  cd C:/dev/active/warp-kilocore-lab
+  cargo run --package kilocore_gateway --example status_probe 2>&1
