@@ -7082,6 +7082,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e2db585e1d738fc771bf08a151420d3ed193d9d895a36df7f6f8a9456b911ddc"
 
 [[package]]
+name = "kilocore_gateway"
+version = "0.0.0"
+dependencies = [
+ "anyhow",
+ "env_logger",
+ "log",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "kmeans_colors"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -14253,6 +14264,7 @@ dependencies = [
  "jemalloc_pprof",
  "js-sys",
  "jsonschema",
+ "kilocore_gateway",
  "kmeans_colors",
  "languages",
  "lasso",

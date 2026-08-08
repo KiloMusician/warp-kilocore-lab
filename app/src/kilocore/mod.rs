@@ -8,7 +8,8 @@ use warp_core::ui::theme::Fill;
 use warpui::elements::{ChildAnchor, ConstrainedBox, MouseStateHandle, OffsetPositioning, ParentAnchor, ParentOffsetBounds, ParentElement, Stack};
 use warpui::prelude::vec2f;
 use warpui::prelude::Hoverable;
-use warpui::{AppContext, Element};
+use warpui::ui_components::components::UiComponent;
+use warpui::{AppContext, Element, SingletonEntity};
 
 use crate::appearance::Appearance;
 
