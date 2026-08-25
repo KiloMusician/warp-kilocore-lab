@@ -1,3 +1,16 @@
+## KiloCore Local Overlay
+
+This checkout is an **upstream Warp codebase with local KiloCore lab patches**.
+Use the upstream Warp docs below for normal build and contribution flow, but
+keep these local rules in mind:
+
+- treat this repo as an integration lab, not as colony authority
+- prefer minimal, well-scoped local patches over broad vendor divergence
+- document KiloCore-specific launch or channel behavior at the repo root so the
+  local rationale stays visible
+- when a fix belongs upstream Warp rather than the colony overlay, keep the
+  local note small and avoid rewriting upstream docs unnecessarily
+
 <a href="https://www.warp.dev">
     <img width="1024" alt="Warp Agentic Development Environment product preview" src="https://github.com/user-attachments/assets/9976b2da-2edd-4604-a36c-8fd53719c6d4" />
 </a>

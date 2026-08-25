@@ -2,7 +2,13 @@
 //!
 //! For non-bundled builds, the generator is invoked at runtime. For bundled builds, the config
 //! is embedded at compile time via the build script.
+use std::env;
+
 use warp_core::channel::ChannelConfig;
+use warp_core::{
+    channel::{AutoupdateConfig, CrashReportingConfig, McpStaticConfig, OzConfig, TelemetryConfig, WarpServerConfig},
+    AppId,
+};
 
 /// The name of the config generator binary, expected to be on PATH.
 const CONFIG_BIN_NAME: &str = "warp-channel-config";
@@ -45,6 +51,13 @@ pub use load_config;
 /// [`ChannelConfig`].
 #[cfg_attr(feature = "release_bundle", expect(dead_code))]
 pub fn load_config_from_generator(channel: &str) -> ChannelConfig {
+    if use_kilocore_local_fallback() {
+        eprintln!(
+            "KILOCORE_WARP_DEV is set; using local fallback ChannelConfig for '{channel}' instead of '{CONFIG_BIN_NAME}'."
+        );
+        return load_kilocore_local_fallback(channel);
+    }
+
     let target_family = if cfg!(target_family = "wasm") {
         "wasm"
     } else {
@@ -98,4 +111,29 @@ pub fn load_config_from_generator(channel: &str) -> ChannelConfig {
 pub fn load_config_from_embedded(json: &str) -> ChannelConfig {
     serde_json::from_str(json)
         .unwrap_or_else(|err| panic!("Failed to parse embedded channel config: {err}"))
+}
+
+fn use_kilocore_local_fallback() -> bool {
+    env::var_os("KILOCORE_WARP_DEV").is_some()
+}
+
+fn load_kilocore_local_fallback(channel: &str) -> ChannelConfig {
+    let (app_name, logfile_name) = match channel {
+        "stable" => ("Warp", "warp.log"),
+        "preview" => ("WarpPreview", "warp_preview.log"),
+        "dev" => ("WarpDev", "warp_dev.log"),
+        "local" => ("WarpLocal", "warp_local.log"),
+        other => panic!("Unsupported channel for KiloCore local fallback: {other}"),
+    };
+
+    ChannelConfig {
+        app_id: AppId::new("dev", "warp", app_name),
+        logfile_name: logfile_name.into(),
+        server_config: WarpServerConfig::production(),
+        oz_config: OzConfig::production(),
+        telemetry_config: None::<TelemetryConfig>,
+        autoupdate_config: None::<AutoupdateConfig>,
+        crash_reporting_config: None::<CrashReportingConfig>,
+        mcp_static_config: None::<McpStaticConfig>,
+    }
 }
